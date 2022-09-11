@@ -9,5 +9,9 @@ export default function SearchInput({ $target, initialState }) {
     this.$element.innerHTML = `
         <input class="SearchInput__input" type="text" placeholder="Enter the Programming Languages" value="${this.state}">
     `;
+
+    this.$element.addEventListener("keyup", (e) => {
+      onchange(e.target.value);
+    });
   };
 }
