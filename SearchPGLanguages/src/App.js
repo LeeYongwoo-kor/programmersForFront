@@ -40,7 +40,11 @@ export default function App({ $target }) {
     $target,
     initialState: {
       cursor: 0,
+      selectedIndex: 0,
       items: [],
+    },
+    onSelect: (language) => {
+      alert(language);
     },
   });
 }

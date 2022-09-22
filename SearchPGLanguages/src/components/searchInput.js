@@ -11,7 +11,17 @@ export default function SearchInput({ $target, initialState }) {
     `;
 
     this.$element.addEventListener("keyup", (e) => {
-      onchange(e.target.value);
+      const actionIgnoreKeys = [
+        "Enter",
+        "ArrowUp",
+        "ArrowDown",
+        "ArrowLeft",
+        "ArrowRight",
+      ];
+
+      if (!actionIgnoreKeys.includes(e.key)) {
+        onchange(e.target.value);
+      }
     });
   };
 }
