@@ -22,6 +22,10 @@ export default function SearchInput({ $target, initialState }) {
       if (!actionIgnoreKeys.includes(e.key)) {
         onchange(e.target.value);
       }
+
+      this.$element.addEventListener("submit", (e) => {
+        e.preventDefault();
+      });
     });
   };
 }

@@ -38,6 +38,18 @@ export default function Suggestion({ $target, initialState, onSelect }) {
       this.$element.style.display = "none";
       this.$element.innerHTML = "";
     }
+
+    this.$element.addEventListener("click", (e) => {
+      const $li = e.target.closest("li");
+      if ($li) {
+        const { index } = $li.dataset;
+        try {
+          onSelect(this.state.items[parseInt(index)]);
+        } catch (e) {
+          alert("Something wrong! Not processed normally");
+        }
+      }
+    });
   };
 
   window.addEventListener("keyup", (e) => {

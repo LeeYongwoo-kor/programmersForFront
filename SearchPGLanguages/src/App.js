@@ -17,6 +17,7 @@ export default function App({ $target }) {
       selectedIndex: 0,
       items: this.state.fetchedLanguages,
     });
+    selectedLanguages.setState(this.state.selectedLanguages);
   };
 
   const searchInput = new SearchInput({
@@ -45,6 +46,23 @@ export default function App({ $target }) {
     },
     onSelect: (language) => {
       alert(language);
+
+      // 이미 선택된 언어인 경우, 맨 뒤에 보내버리기
+      const nextSelectedLanguages = [...this.state.selectedLanguages];
+
+      const index = nextSelectedLanguages.findIndex(
+        (selectedLanguage) => selectedLanguage === language
+      );
+
+      if (index > -1) {
+        nextSelectedLanguages.splice(index, 1);
+      }
+      nextSelectedLanguages.push(language);
+
+      this.setState({
+        ...this.state,
+        selectedLanguages: nextSelectedLanguages,
+      });
     },
   });
 }
