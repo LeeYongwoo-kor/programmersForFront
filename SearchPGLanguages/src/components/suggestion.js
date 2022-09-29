@@ -16,8 +16,20 @@ export default function Suggestion({ $target, initialState, onSelect }) {
     this.render();
   };
 
+  this.renderMatchedItem = (keyword, item) => {
+    if (!item.includes(keyword)) {
+      return item;
+    }
+
+    const matchedText = item.match(new RegExp(keyword, "gi"))[0];
+    return item.replace(
+      new RegExp(matchedText, "gi"),
+      `<span class="Suggestion__item--matched">${matchedText}</span>`
+    );
+  };
+
   this.render = () => {
-    const { items = [] } = this.state;
+    const { selectedIndex, keyword, items = [] } = this.state;
     if (items.length > 0) {
       this.$element.style.display = "block";
       this.$element.innerHTML = `
@@ -26,10 +38,13 @@ export default function Suggestion({ $target, initialState, onSelect }) {
                   .map(
                     (item, idx) =>
                       `<li class="${
-                        index === selectedIndex
+                        idx === selectedIndex
                           ? "Suggestion__item--selected"
                           : ""
-                      }" data-index="${index}">${item}</li>`
+                      }" data-index="${idx}">${this.renderMatchedItem(
+                        keyword,
+                        item
+                      )}</li>`
                   )
                   .join("")}
             </ul>

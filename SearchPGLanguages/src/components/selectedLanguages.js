@@ -1,3 +1,5 @@
+const MAX_DISPLAY_COUNT = 5;
+
 export default function SelectedLanguage({ $target, initialState }) {
   this.$element = document.createElement("div");
   this.$element.className = "SelectedLanguage";
@@ -7,6 +9,15 @@ export default function SelectedLanguage({ $target, initialState }) {
 
   this.setState = (nextState) => {
     this.state = nextState;
+
+    if (this.state.length > MAX_DISPLAY_COUNT) {
+      const startPosition = this.state.length - MAX_DISPLAY_COUNT;
+      this.state = this.state.slice(
+        startPosition,
+        MAX_DISPLAY_COUNT + startPosition
+      );
+    }
+
     this.render();
   };
 
