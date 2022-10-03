@@ -1,3 +1,5 @@
+import { routeChange } from "../router/router";
+
 export default function ProductList({ $target, initialState }) {
   const productList = document.createElement("ul");
   $target.appendChild(productList);
@@ -32,4 +34,13 @@ export default function ProductList({ $target, initialState }) {
   };
 
   this.render();
+
+  productList.addEventListener("click", (e) => {
+    const $li = e.target.closest("li");
+    const { productId } = $li.dateset;
+
+    if (productId) {
+      routeChange(`/products/${productId}`);
+    }
+  });
 }

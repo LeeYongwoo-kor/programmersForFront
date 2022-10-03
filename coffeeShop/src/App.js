@@ -1,5 +1,6 @@
 import CartPage from "./components/CartPage";
 import ProductDetailPage from "./components/ProductDetailPage";
+import { init } from "./router/router";
 
 export default function App({ $target }) {
   this.route = () => {
@@ -19,6 +20,8 @@ export default function App({ $target }) {
       new CartPage({ $target }).render();
     }
   };
+
+  init(this.route);
 
   this.route();
 }
