@@ -1,3 +1,5 @@
+import SelectedOptions from "./SelectedOptions";
+
 export default function ProductDetail({ $target, initialState }) {
   const productDetail = document.createElement("div");
   productDetail.className = "ProductDetail";
@@ -23,29 +25,36 @@ export default function ProductDetail({ $target, initialState }) {
     const { product } = this.state;
 
     productDetail.innerHTML = `
-      <img src="${product.imageUrl}"}>
-        <div class="ProductDetail__info">
-          <h2>${product.name}</h2>
-          <div class="ProductDetail__price">$ ${product.price}~</div>
-          <select>
-            <option>Please select a product</option>
-            ${product.productOptions
-              .map((option) => {
-                `<option value=${option.id}" ${
-                  option.stock === 0 ? "disabled" : ""
-                }>
-                ${option.stock === 0 ? "(Out of stock)" : ""}${product.name} ${
-                  option.name
-                } ${option.price > 0 ? `(+$ ${option.price})` : ""}
-                </option>
-            `;
-              })
-              .join("")}
-          </select>
-          <div class="ProductDetail__selectedOptions"></div>
-        </div>
-      </img>
+      <img src="${product.imageUrl}"} />
+      <div class="ProductDetail__info">
+        <h2>${product.name}</h2>
+        <div class="ProductDetail__price">$ ${product.price}~</div>
+        <select>
+          <option>Please select a product</option>
+          ${product.productOptions
+            .map((option) => {
+              `<option value=${option.id}" ${
+                option.stock === 0 ? "disabled" : ""
+              }>
+              ${option.stock === 0 ? "(Out of stock)" : ""}${product.name} ${
+                option.name
+              } ${option.price > 0 ? `(+$ ${option.price})` : ""}
+              </option>
+          `;
+            })
+            .join("")}
+        </select>
+        <div class="ProductDetail__selectedOptions"></div>
+      </div>
     `;
+
+    selectedOptions = new SelectedOptions({
+      $target: productDetail.querySelector(".ProductDetail__selectedOptions"),
+      initialState: {
+        product: this.state.product,
+        selectedOptions: this.state.selectedOptions,
+      },
+    });
   };
 
   this.render();
