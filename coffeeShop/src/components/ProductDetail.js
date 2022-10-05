@@ -6,9 +6,17 @@ export default function ProductDetail({ $target, initialState }) {
 
   this.state = initialState;
 
+  let selectedOptions = null;
+
   this.setState = (nextState) => {
     this.state = nextState;
     this.render();
+
+    if (selectedOptions) {
+      selectedOptions.setState({
+        selectedOptions: this.state.selectedOptions,
+      });
+    }
   };
 
   this.render = () => {
