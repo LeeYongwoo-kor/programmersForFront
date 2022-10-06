@@ -1,6 +1,8 @@
 import SelectedOptions from "./SelectedOptions";
 
 export default function ProductDetail({ $target, initialState }) {
+  let isInitialized = false;
+
   const productDetail = document.createElement("div");
   productDetail.className = "ProductDetail";
 
@@ -24,7 +26,8 @@ export default function ProductDetail({ $target, initialState }) {
   this.render = () => {
     const { product } = this.state;
 
-    productDetail.innerHTML = `
+    if (!isInitialized) {
+      productDetail.innerHTML = `
       <img src="${product.imageUrl}"} />
       <div class="ProductDetail__info">
         <h2>${product.name}</h2>
@@ -48,13 +51,16 @@ export default function ProductDetail({ $target, initialState }) {
       </div>
     `;
 
-    selectedOptions = new SelectedOptions({
-      $target: productDetail.querySelector(".ProductDetail__selectedOptions"),
-      initialState: {
-        product: this.state.product,
-        selectedOptions: this.state.selectedOptions,
-      },
-    });
+      selectedOptions = new SelectedOptions({
+        $target: productDetail.querySelector(".ProductDetail__selectedOptions"),
+        initialState: {
+          product: this.state.product,
+          selectedOptions: this.state.selectedOptions,
+        },
+      });
+
+      isInitialized = true;
+    }
   };
 
   this.render();
