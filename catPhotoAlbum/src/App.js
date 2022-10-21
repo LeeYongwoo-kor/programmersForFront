@@ -2,15 +2,31 @@ import CartPage from "./components/CartPage";
 import ProductDetailPage from "./components/ProductDetailPage";
 import { init } from "./router/router";
 
-export default function App({ $target }) {
+export default function App({ $app }) {
   this.state = {
     isRoot: false,
     nodes: [],
     depth: [],
   };
 
-  const breadcrumb = new Breadcrumb();
-  const nodes = new Nodes();
+  const breadcrumb = new Breadcrumb({
+    $app, initialState: this.state.depth
+  });
+
+  const nodes = new Nodes({
+    $app, initialState: {
+      isRoot: this.state.isRoot,
+      nodes: this.state.nodes
+    },
+
+    onClick: (node) => {
+      if (node.type === "DIRECTORY") {
+        // DIRECTORY
+      } else if (node.type === "FILE") {
+        // FILE
+      }
+    }
+  });
 
   this.setState = (nextState) => {
     this.state = nextState;
