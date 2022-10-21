@@ -1,6 +1,5 @@
-import CartPage from "./components/CartPage";
-import ProductDetailPage from "./components/ProductDetailPage";
-import { init } from "./router/router";
+import Breadcrumb from "./components/Breadcrumb.js";
+import Nodes from "./components/Nodes.js";
 
 export default function App({ $app }) {
   this.state = {
@@ -10,13 +9,15 @@ export default function App({ $app }) {
   };
 
   const breadcrumb = new Breadcrumb({
-    $app, initialState: this.state.depth
+    $app,
+    initialState: this.state.depth,
   });
 
   const nodes = new Nodes({
-    $app, initialState: {
+    $app,
+    initialState: {
       isRoot: this.state.isRoot,
-      nodes: this.state.nodes
+      nodes: this.state.nodes,
     },
 
     onClick: (node) => {
@@ -25,7 +26,7 @@ export default function App({ $app }) {
       } else if (node.type === "FILE") {
         // FILE
       }
-    }
+    },
   });
 
   this.setState = (nextState) => {
@@ -43,12 +44,12 @@ export default function App({ $app }) {
       this.setState({
         ...this.state,
         isRoot: true,
-        nodes: rootNodes;
-      })
+        nodes: rootNodes,
+      });
     } catch (e) {
       // error
     }
-  }
+  };
 
   init();
 }
