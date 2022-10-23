@@ -20,9 +20,14 @@ export default function App({ $app }) {
       nodes: this.state.nodes,
     },
 
-    onClick: (node) => {
+    onClick: async (node) => {
       if (node.type === "DIRECTORY") {
-        // DIRECTORY
+        const nextNodes = await request(node.id);
+        this.setState({
+          ...this.state,
+          depth: [...this.state.depth, node],
+          nodes: nextNodes,
+        });
       } else if (node.type === "FILE") {
         // FILE
       }
