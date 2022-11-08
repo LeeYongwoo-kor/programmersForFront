@@ -11,6 +11,7 @@ var app = express();
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
+app.engine("html", require("ejs").renderFile); // for html
 app.set("view engine", "html");
 
 app.use(logger("dev"));
