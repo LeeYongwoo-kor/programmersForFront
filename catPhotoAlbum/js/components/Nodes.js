@@ -1,3 +1,5 @@
+import { directory, notfound, prev, file } from "../util/assets.js";
+
 export default function Nodes({ $app, initialState, onClick }) {
   this.state = initialState;
   this.onClick = onClick;
@@ -14,10 +16,7 @@ export default function Nodes({ $app, initialState, onClick }) {
     if (this.state.nodes) {
       const nodesTemplate = this.state.nodes
         .map((node) => {
-          const iconPath =
-            node.type === "FILE"
-              ? "./assets/file.png"
-              : "./assets/directory.png";
+          const iconPath = node.type === "FILE" ? file : directory;
 
           return `
           <div class="Node" data-node-id="${node.id}">
@@ -30,7 +29,7 @@ export default function Nodes({ $app, initialState, onClick }) {
 
       this.$target.innerHTML = !this.state.isRoot
         ? `
-          <div class="Node"><img src="/assets/prev.png"></div>${nodesTemplate}`
+          <div class="Node"><img src="${prev}" onerror="${notfound}"></div>${nodesTemplate}`
         : nodesTemplate;
     }
 
