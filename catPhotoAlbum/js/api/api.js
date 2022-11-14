@@ -1,4 +1,4 @@
-const API_END_POINT = "";
+const API_END_POINT = "http://localhost:3000/api/cats";
 
 const request = async (nodeId) => {
   try {
