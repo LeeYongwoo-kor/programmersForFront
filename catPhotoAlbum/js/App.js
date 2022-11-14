@@ -1,12 +1,19 @@
 import Breadcrumb from "./components/Breadcrumb.js";
 import Nodes from "./components/Nodes.js";
+import ImageView from "./components/ImageView.js";
 
 export default function App({ $app }) {
   this.state = {
     isRoot: false,
     nodes: [],
     depth: [],
+    selectedFilePath: null,
   };
+
+  const imageView = new ImageView({
+    $app,
+    initialState: this.state.selectedNodeImage,
+  });
 
   const breadcrumb = new Breadcrumb({
     $app,
@@ -29,7 +36,10 @@ export default function App({ $app }) {
           nodes: nextNodes,
         });
       } else if (node.type === "FILE") {
-        // FILE
+        this.setState({
+          ...this.state,
+          selectedFilePath: node.filePath,
+        });
       }
     },
   });
@@ -41,6 +51,7 @@ export default function App({ $app }) {
       isRoot: this.state.isRoot,
       nodes: this.state.nodes,
     });
+    imageView.setState(this.state.selectedFilePath);
   };
 
   const init = async () => {
