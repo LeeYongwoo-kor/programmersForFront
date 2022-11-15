@@ -4,6 +4,8 @@ import ImageView from "./components/ImageView.js";
 import Loading from "./components/Loading.js";
 import Nodes from "./components/Nodes.js";
 
+const cache = {};
+
 export default function App({ $app }) {
   this.state = {
     isRoot: false,
@@ -27,20 +29,27 @@ export default function App({ $app }) {
 
   const nodes = new Nodes({
     $app,
-    initialState: {
-      isRoot: this.state.isRoot,
-      nodes: this.state.nodes,
-    },
+    initialState: [],
 
     onClick: async (node) => {
       try {
         if (node.type === "DIRECTORY") {
-          const nextNodes = await requestApi(node.id);
-          this.setState({
-            ...this.state,
-            depth: [...this.state.depth, node],
-            nodes: nextNodes,
-          });
+          if (cache[node.id]) {
+            this.setState({
+              ...this.state,
+              depth: [...this.state.depth, node],
+              nodes: nextNodes,
+            });
+          } else {
+            const nextNodes = await requestApi(node.id);
+            this.setState({
+              ...this.state,
+              depth: [...this.state.depth, node],
+              nodes: nextNodes,
+            });
+
+            cache[node.id] = nextNodes;
+          }
         } else if (node.type === "FILE") {
           this.setState({
             ...this.state,
@@ -67,15 +76,13 @@ export default function App({ $app }) {
           this.setState({
             ...nextState,
             isRoot: true,
-            nodes: rootNodes,
+            nodes: cache[rootNodes],
           });
         } else {
-          const prevNodes = await requestApi(prevNodeId);
-
           this.setState({
             ...nextNodes,
             isRoot: false,
-            nodes: prevNodes,
+            nodes: cache[prevNodeId],
           });
         }
       } catch (e) {
@@ -104,9 +111,12 @@ export default function App({ $app }) {
       const rootNodes = await requestApi();
       this.setState({
         ...this.state,
+        isLoading: false,
         isRoot: true,
         nodes: rootNodes,
       });
+
+      cache.root = rootNodes;
     } catch (e) {
       throw new Error("init(): Error occurred!");
     } finally {
