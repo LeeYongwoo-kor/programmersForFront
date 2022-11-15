@@ -1,15 +1,19 @@
-import Breadcrumb from "./components/Breadcrumb.js";
-import Nodes from "./components/Nodes.js";
-import ImageView from "./components/ImageView.js";
 import { requestApi } from "./api/api.js";
+import Breadcrumb from "./components/Breadcrumb.js";
+import ImageView from "./components/ImageView.js";
+import Loading from "./components/Loading.js";
+import Nodes from "./components/Nodes.js";
 
 export default function App({ $app }) {
   this.state = {
     isRoot: false,
+    isLoading: false,
     nodes: [],
     depth: [],
     selectedFilePath: null,
   };
+
+  const loading = new Loading(this.state.isLoading);
 
   const imageView = new ImageView({
     $app,
@@ -88,10 +92,15 @@ export default function App({ $app }) {
       nodes: this.state.nodes,
     });
     imageView.setState(this.state.selectedFilePath);
+    loading.setState(this.state.isLoading);
   };
 
   const init = async () => {
     try {
+      this.setState({
+        ...this.state,
+        isLoading: true,
+      });
       const rootNodes = await requestApi();
       this.setState({
         ...this.state,
@@ -100,6 +109,11 @@ export default function App({ $app }) {
       });
     } catch (e) {
       throw new Error("init(): Error occurred!");
+    } finally {
+      this.setState({
+        ...this.state,
+        isLoading: false,
+      });
     }
   };
 
