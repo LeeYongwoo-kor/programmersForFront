@@ -10,7 +10,7 @@ interface IParentCat {
   id: number;
 }
 
-export const getAllCat: ICat[] = [
+export const cats: ICat[] = [
   {
     id: 1,
     name: "2021/01",
