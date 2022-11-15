@@ -11,10 +11,10 @@ export default function Breadcrumb({ $app, initialState }) {
   };
 
   this.render = () => {
-    this.$target.innerHTML = `<div class="nav-item">root</div>${this.state.map(
-      (node, idx) => {
+    this.$target.innerHTML = `<div class="nav-item">root</div>${this.state
+      .map((node, idx) => {
         return `<div class="nav-item" data-index="${idx}>${node.name}</div>`;
-      }
-    )}`.join("");
+      })
+      .join("")}`;
   };
 }

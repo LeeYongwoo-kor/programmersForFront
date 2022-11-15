@@ -1,6 +1,6 @@
 const API_END_POINT = "http://localhost:3000/api/cats";
 
-const request = async (nodeId) => {
+export const requestApi = async (nodeId) => {
   try {
     const res = await fetch(`${API_END_POINT}/${nodeId ? nodeId : ""}`);
 

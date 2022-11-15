@@ -1,8 +1,9 @@
 import { directory, notfound, prev, file } from "../util/assets.js";
 
-export default function Nodes({ $app, initialState, onClick }) {
+export default function Nodes({ $app, initialState, onClick, onBackClick }) {
   this.state = initialState;
   this.onClick = onClick;
+  this.onBackClick = onBackClick;
 
   this.$target = document.createElement("ul");
   $app.appendChild(this.$target);
@@ -36,6 +37,9 @@ export default function Nodes({ $app, initialState, onClick }) {
     this.$target.querySelectorAll(".Node").forEach(($node) => {
       $node.addEventListener("click", (e) => {
         const { nodeId } = e.target.dataset;
+        if (!nodeId) {
+          this.onBackClick();
+        }
         const selectedNode = this.state.nodes.find(
           (node) => node.id === nodeId
         );
