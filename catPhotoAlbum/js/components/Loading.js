@@ -1,4 +1,4 @@
-import { loading } from "../util/assets";
+import { loading } from "../util/assets.js";
 
 export default function Loading({ $app, initialState }) {
   this.state = initialState;
