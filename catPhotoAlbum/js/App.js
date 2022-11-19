@@ -8,14 +8,14 @@ const cache = {};
 
 export default function App({ $app }) {
   this.state = {
-    isRoot: false,
+    isRoot: true,
     isLoading: false,
     nodes: [],
     depth: [],
     selectedFilePath: null,
   };
 
-  const loading = new Loading(this.state.isLoading);
+  const loading = new Loading({ $app, initialState: this.state.isLoading });
 
   const imageView = new ImageView({
     $app,
@@ -24,7 +24,29 @@ export default function App({ $app }) {
 
   const breadcrumb = new Breadcrumb({
     $app,
-    initialState: this.state.depth,
+    initialState: [],
+    onClick: (index) => {
+      if (index === null) {
+        this.setState({
+          ...this.state,
+          depth: [],
+          nodes: cache.root,
+        });
+        return;
+      }
+      if (index === this.state.depth.length - 1) {
+        return;
+      }
+
+      const nextState = { ...this.state };
+      const nextDepth = this.state.depth.slice(0, index + 1);
+
+      this.setState({
+        ...nextState,
+        depth: nextDepth,
+        nodes: cache[nextDepth[nextDepth.length - 1].id],
+      });
+    },
   });
 
   const nodes = new Nodes({
@@ -37,13 +59,15 @@ export default function App({ $app }) {
           if (cache[node.id]) {
             this.setState({
               ...this.state,
+              isRoot: false,
               depth: [...this.state.depth, node],
-              nodes: nextNodes,
+              nodes: cache[node.id],
             });
           } else {
             const nextNodes = await requestApi(node.id);
             this.setState({
               ...this.state,
+              isRoot: false,
               depth: [...this.state.depth, node],
               nodes: nextNodes,
             });
@@ -53,6 +77,7 @@ export default function App({ $app }) {
         } else if (node.type === "FILE") {
           this.setState({
             ...this.state,
+            isRoot: false,
             selectedFilePath: node.filePath,
           });
         }
@@ -72,15 +97,14 @@ export default function App({ $app }) {
             : nextState.depth[nextState.depth.length - 1].id;
 
         if (prevNodeId === null) {
-          const rootNodes = await requestApi();
           this.setState({
             ...nextState,
             isRoot: true,
-            nodes: cache[rootNodes],
+            nodes: cache.root,
           });
         } else {
           this.setState({
-            ...nextNodes,
+            ...nextState,
             isRoot: false,
             nodes: cache[prevNodeId],
           });
