@@ -29,6 +29,7 @@ export default function App({ $app }) {
       if (index === null) {
         this.setState({
           ...this.state,
+          isRoot: true,
           depth: [],
           nodes: cache.root,
         });

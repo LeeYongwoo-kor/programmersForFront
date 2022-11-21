@@ -12,9 +12,9 @@ export default function Breadcrumb({ $app, initialState = [], onClick }) {
   };
 
   this.render = () => {
-    this.$target.innerHTML = `<div class="nav-item">root</div>${this.state
+    this.$target.innerHTML = `<span class="nav-item">root</span>${this.state
       .map((node, idx) => {
-        return `<div class="nav-item" data-index="${idx}>${node.name}</div>`;
+        return `<span class="nav-item" data-index="${idx}"> → [${node.name}]</span>`;
       })
       .join("")}`;
   };
