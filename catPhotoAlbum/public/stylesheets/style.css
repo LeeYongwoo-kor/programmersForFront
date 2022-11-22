@@ -16,6 +16,7 @@ img {
 
 .Node {
   cursor: pointer;
+  text-align: center;
 }
 
 nav > .nav-item {
@@ -23,7 +24,7 @@ nav > .nav-item {
   cursor: pointer;
 }
 
-ul {
+section {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 10px;

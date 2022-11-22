@@ -5,7 +5,7 @@ export default function Nodes({ $app, initialState, onClick, onBackClick }) {
   this.onClick = onClick;
   this.onBackClick = onBackClick;
 
-  this.$target = document.createElement("ul");
+  this.$target = document.createElement("section");
   $app.appendChild(this.$target);
 
   this.setState = (nextState) => {
@@ -30,7 +30,10 @@ export default function Nodes({ $app, initialState, onClick, onBackClick }) {
 
       this.$target.innerHTML = !this.state.isRoot
         ? `
-          <div class="Node"><img src="${prev}" onerror="${notfound}"></div>${nodesTemplate}`
+          <div class="Node">
+            <img src="${prev}" onerror="${notfound}">
+            <div>Back</div>
+          </div>${nodesTemplate}`
         : nodesTemplate;
     }
   };

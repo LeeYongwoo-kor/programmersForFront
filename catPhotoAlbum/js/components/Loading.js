@@ -13,7 +13,7 @@ export default function Loading({ $app, initialState }) {
   };
 
   this.render = () => {
-    this.$target.innerHTML = `<div class="content"><img src="${loading}></div>`;
+    this.$target.innerHTML = `<div class="content"><img src="${loading}"></div>`;
 
     this.$target.style.display = this.state ? "block" : "none";
   };
