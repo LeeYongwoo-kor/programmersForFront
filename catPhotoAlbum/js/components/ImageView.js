@@ -1,7 +1,8 @@
-export default function ImageView({ $app, initialState }) {
+export default function ImageView({ $app, initialState, onClick }) {
   this.state = initialState;
+  this.onClick = onClick;
   this.$target = document.createElement("div");
-  this.$target.className = "Modal ImageView";
+  this.$target.className = "ImageView Modal";
 
   $app.appendChild(this.$target);
 
@@ -15,7 +16,15 @@ export default function ImageView({ $app, initialState }) {
       this.state ? `<Img src="${this.state}">` : ""
     }</div>`;
 
-    this.$target.style.display = this.state ? "block" : "none";
+    const onClickEventHandler = () => this.onClick(this.state);
+
+    if (this.state) {
+      this.$target.style.display = "block";
+      this.$target.addEventListener("click", onClickEventHandler);
+    } else {
+      this.$target.style.display = "none";
+      this.$target.removeEventListener("click", onClickEventHandler);
+    }
   };
 
   this.render();

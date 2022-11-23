@@ -19,7 +19,17 @@ export default function App({ $app }) {
 
   const imageView = new ImageView({
     $app,
-    initialState: this.state.selectedNodeImage,
+    initialState: this.state.selectedFilePath,
+    onClick: (isShow) => {
+      if (isShow) {
+        this.setState({
+          ...this.state,
+          selectedFilePath: null,
+        });
+        return;
+      }
+      return;
+    },
   });
 
   const breadcrumb = new Breadcrumb({
@@ -78,7 +88,6 @@ export default function App({ $app }) {
         } else if (node.type === "FILE") {
           this.setState({
             ...this.state,
-            isRoot: false,
             selectedFilePath: node.filePath,
           });
         }
