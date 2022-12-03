@@ -8,3 +8,22 @@ body {
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
 }
+
+input.SearchInput__input {
+  width: 300px;
+  height: 50px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 15px;
+  border: 2px solid deepskyblue;
+  color: deepskyblue;
+  text-indent: 10px;
+}
+
+input.SearchInput__input::placeholder {
+  font-weight: 450;
+}
+
+input.SearchInput__input:focus {
+  outline-color: royalblue;
+}
