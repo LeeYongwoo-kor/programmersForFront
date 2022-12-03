@@ -1,6 +1,6 @@
-export default function SearchInput({ $target, initialState }) {
+export default function SearchInput({ $target, initialState, onChange }) {
   this.$element = document.createElement("form");
-  this.$element = className = "SearchInput";
+  this.$element.className = "SearchInput";
   this.state = initialState;
 
   $target.appendChild(this.$element);
@@ -20,7 +20,7 @@ export default function SearchInput({ $target, initialState }) {
       ];
 
       if (!actionIgnoreKeys.includes(e.key)) {
-        onchange(e.target.value);
+        onChange(e.target.value);
       }
 
       this.$element.addEventListener("submit", (e) => {
@@ -28,4 +28,6 @@ export default function SearchInput({ $target, initialState }) {
       });
     });
   };
+
+  this.render();
 }

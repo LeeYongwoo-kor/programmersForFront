@@ -1,6 +1,7 @@
-import { fetchedLanguages } from "./api/api";
-import SearchInput from "./components/searchInput";
-import Suggestion from "./components/suggestion";
+import { fetchedLanguages } from "./api/api.ts";
+import SearchInput from "./components/searchInput.js";
+import Suggestion from "./components/suggestion.js";
+import SelectedLanguages from "./components/selectedLanguages.js";
 
 export default function App({ $target }) {
   this.state = {
@@ -8,7 +9,7 @@ export default function App({ $target }) {
     selectedLanguages: [],
   };
 
-  this.setState = (nextStage) => {
+  this.setState = (nextState) => {
     this.state = {
       ...this.state,
       ...nextState,
@@ -20,10 +21,16 @@ export default function App({ $target }) {
     selectedLanguages.setState(this.state.selectedLanguages);
   };
 
+  const selectedLanguages = new SelectedLanguages({
+    $target,
+    initialState: [],
+  });
+
   const searchInput = new SearchInput({
     $target,
     initialState: "",
     onChange: async (keyword) => {
+      // 입력한 검색어가 다 지워진 경우, fetchLanguages를 초기화
       if (keyword.length === 0) {
         this.setState({
           fetchedLanguages: [],

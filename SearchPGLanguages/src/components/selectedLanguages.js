@@ -22,7 +22,7 @@ export default function SelectedLanguage({ $target, initialState }) {
   };
 
   this.render = () => {
-    this.$element.innerHTML = `
+    this.$element.innerHTML = `0
     <ul>
         ${this.state.map((item) => `<li>${item}</li>`).join("")}
     </ul>

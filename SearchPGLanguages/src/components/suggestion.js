@@ -1,6 +1,6 @@
 export default function Suggestion({ $target, initialState, onSelect }) {
   this.$element = document.createElement("div");
-  this.$element = className = "Suggestion";
+  this.$element.className = "Suggestion";
   $target.appendChild(this.$element);
 
   this.state = {
