@@ -32,4 +32,11 @@ module.exports = {
     }),
     new CleanWebpackPlugin(),
   ],
+  resolve: {
+    fallback: {
+      path: false,
+      os: false,
+      fs: false,
+    },
+  },
 };
