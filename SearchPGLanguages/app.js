@@ -5,8 +5,14 @@ var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 
 var indexRouter = require("./routes/index");
+var apiRouter = require("./routes/api");
 
 var app = express();
+
+var envResult = require("dotenv").config();
+if (envResult.error) {
+  throw new envResult.error();
+}
 
 // view engine setup
 app.set("views", path.join(__dirname, "pages"));
@@ -21,6 +27,7 @@ app.use(cookieParser());
 app.use("/public", express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
+app.use("/api", apiRouter);
 app.use("/src", express.static(path.join(__dirname, "src")));
 app.use("/dist", express.static(path.join(__dirname, "dist")));
 
