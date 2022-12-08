@@ -1,8 +1,8 @@
 export const storage = localStorage;
 
-export const getItem = (key, defaultValue = {}) => {
+export const getItem = (key, defaultValue = []) => {
   try {
-    const value = storage.getItem(key);
+    const value = localStorage.getItem(key);
     return value ? JSON.parse(value) : defaultValue;
   } catch (e) {
     return defaultValue;
@@ -11,16 +11,18 @@ export const getItem = (key, defaultValue = {}) => {
 
 export const setItem = (key, value) => {
   try {
-    storage.setItem(key, JSON.stringify(value));
+    localStorage.setItem(key, JSON.stringify(value));
   } catch (e) {
+    console.error(e);
     console.warn("Didn't do anything.");
   }
 };
 
 export const removeItem = (key) => {
   try {
-    storage.removeItem(key);
+    localStorage.removeItem(key);
   } catch (e) {
+    console.error(e);
     console.warn("Didn't do anything.");
   }
 };
