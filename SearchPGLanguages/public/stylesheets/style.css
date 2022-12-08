@@ -4,20 +4,34 @@
 }
 
 body {
-  padding: 50px;
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
 }
 
+main {
+  display: flex;
+  flex-direction: column;
+  margin-top: 12rem;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+}
+
+ul {
+  list-style: none;
+  padding-left: 0px;
+}
+
 input.SearchInput__input {
-  width: 300px;
-  height: 50px;
-  font-size: 1rem;
+  width: 400px;
+  height: 60px;
+  font-size: 1.2rem;
   font-weight: 600;
-  border-radius: 15px;
+  border-radius: 20px;
   border: 2px solid deepskyblue;
   color: deepskyblue;
   text-indent: 10px;
+  margin-top: 10px;
 }
 
 input.SearchInput__input::placeholder {
@@ -26,4 +40,42 @@ input.SearchInput__input::placeholder {
 
 input.SearchInput__input:focus {
   outline-color: royalblue;
+}
+
+div.SelectedLanguage {
+  width: 600px;
+}
+
+div.SelectedLanguage > ul {
+  display: flex;
+  justify-content: center;
+}
+
+div.SelectedLanguage > ul > li {
+  align-self: center;
+  font-size: 0.8rem;
+  border: 1px solid rgba(0, 0, 0, 0.4);
+  border-radius: 10px;
+  margin: 0 10px;
+  padding: 5px;
+}
+
+div.Suggestion {
+  width: 400px;
+  font-size: 1.1rem;
+  text-indent: 10px;
+  margin-top: 15px;
+  padding: 15px;
+  border: 1px solid gray;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+div.Suggestion > ul > li:hover {
+  background-color: rgba(0, 191, 255, 0.5);
+}
+
+li.Suggestion__item--selected {
+  font-weight: 600;
+  background-color: deepskyblue;
 }
