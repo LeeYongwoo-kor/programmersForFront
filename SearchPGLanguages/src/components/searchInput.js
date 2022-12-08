@@ -9,25 +9,25 @@ export default function SearchInput({ $target, initialState, onChange }) {
     this.$element.innerHTML = `
         <input class="SearchInput__input" type="text" placeholder="Enter the Programming Languages" value="${this.state}">
     `;
-
-    this.$element.addEventListener("keyup", (e) => {
-      const actionIgnoreKeys = [
-        "Enter",
-        "ArrowUp",
-        "ArrowDown",
-        "ArrowLeft",
-        "ArrowRight",
-      ];
-
-      if (!actionIgnoreKeys.includes(e.key)) {
-        onChange(e.target.value);
-      }
-
-      this.$element.addEventListener("submit", (e) => {
-        e.preventDefault();
-      });
-    });
   };
+
+  this.$element.addEventListener("keyup", (e) => {
+    const actionIgnoreKeys = [
+      "Enter",
+      "ArrowUp",
+      "ArrowDown",
+      "ArrowLeft",
+      "ArrowRight",
+    ];
+
+    if (!actionIgnoreKeys.includes(e.key)) {
+      onChange(e.target.value);
+    }
+
+    this.$element.addEventListener("submit", (e) => {
+      e.preventDefault();
+    });
+  });
 
   this.render();
 }

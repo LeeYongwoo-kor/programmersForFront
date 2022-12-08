@@ -4,6 +4,7 @@ export default function Suggestion({ $target, initialState, onSelect }) {
   $target.appendChild(this.$element);
 
   this.state = {
+    cursor: 0,
     selectedIndex: 0,
     items: initialState.items,
   };
@@ -43,7 +44,7 @@ export default function Suggestion({ $target, initialState, onSelect }) {
                           : ""
                       }" data-index="${idx}">${this.renderMatchedItem(
                         keyword,
-                        item
+                        item.ProgrammingLanguage
                       )}</li>`
                   )
                   .join("")}
@@ -53,19 +54,20 @@ export default function Suggestion({ $target, initialState, onSelect }) {
       this.$element.style.display = "none";
       this.$element.innerHTML = "";
     }
-
-    this.$element.addEventListener("click", (e) => {
-      const $li = e.target.closest("li");
-      if ($li) {
-        const { index } = $li.dataset;
-        try {
-          onSelect(this.state.items[parseInt(index)]);
-        } catch (e) {
-          alert("Something wrong! Not processed normally");
-        }
-      }
-    });
   };
+
+  this.$element.addEventListener("click", (e) => {
+    const $li = e.target.closest("li");
+    if ($li) {
+      const { index } = $li.dataset;
+      try {
+        const { ProgrammingLanguage } = this.state.items[parseInt(index)];
+        onSelect(ProgrammingLanguage);
+      } catch (e) {
+        alert("Something wrong! Not processed normally");
+      }
+    }
+  });
 
   window.addEventListener("keyup", (e) => {
     if (this.state.items.length > 0) {
@@ -85,9 +87,11 @@ export default function Suggestion({ $target, initialState, onSelect }) {
           ...this.state,
           selectedIndex: nextIndex,
         });
+      } else if (e.key === "Enter") {
+        const { ProgrammingLanguage } =
+          this.state.items[this.state.selectedIndex];
+        onSelect(ProgrammingLanguage);
       }
-    } else if (e.key === "Enter") {
-      onSelect(this.state.items[this.state.selectedIndex]);
     }
   });
 

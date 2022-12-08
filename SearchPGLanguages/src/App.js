@@ -1,12 +1,13 @@
-import { fetchedLanguages } from "./api/api.ts";
+import { fetchedLanguagesByKeyword } from "./api/api.ts";
 import SearchInput from "./components/searchInput.js";
 import Suggestion from "./components/suggestion.js";
 import SelectedLanguages from "./components/selectedLanguages.js";
+import { getItem } from "./util/storage";
 
 export default function App({ $target }) {
   this.state = {
     fetchedLanguages: [],
-    selectedLanguages: [],
+    selectedLanguages: getItem("selectedLanguages"),
   };
 
   this.setState = (nextState) => {
@@ -23,10 +24,10 @@ export default function App({ $target }) {
 
   const selectedLanguages = new SelectedLanguages({
     $target,
-    initialState: [],
+    initialState: this.state.selectedLanguages,
   });
 
-  const searchInput = new SearchInput({
+  new SearchInput({
     $target,
     initialState: "",
     onChange: async (keyword) => {
@@ -36,10 +37,17 @@ export default function App({ $target }) {
           fetchedLanguages: [],
         });
       } else {
-        const languages = await fetchedLanguages(keyword);
-        this.setState({
-          fetchedLanguages: languages,
-        });
+        const languages = await fetchedLanguagesByKeyword(keyword);
+        const { notFound } = languages;
+        if (notFound) {
+          this.setState({
+            fetchedLanguages: [],
+          });
+        } else {
+          this.setState({
+            fetchedLanguages: languages,
+          });
+        }
       }
     },
   });
@@ -52,8 +60,6 @@ export default function App({ $target }) {
       items: [],
     },
     onSelect: (language) => {
-      alert(language);
-
       // 이미 선택된 언어인 경우, 맨 뒤에 보내버리기
       const nextSelectedLanguages = [...this.state.selectedLanguages];
 

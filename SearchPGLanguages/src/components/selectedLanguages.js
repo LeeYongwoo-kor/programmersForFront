@@ -1,3 +1,5 @@
+import { setItem } from "../util/storage";
+
 const MAX_DISPLAY_COUNT = 5;
 
 export default function SelectedLanguage({ $target, initialState }) {
@@ -22,7 +24,9 @@ export default function SelectedLanguage({ $target, initialState }) {
   };
 
   this.render = () => {
-    this.$element.innerHTML = `0
+    setItem("selectedLanguages", this.state);
+
+    this.$element.innerHTML = `
     <ul>
         ${this.state.map((item) => `<li>${item}</li>`).join("")}
     </ul>
