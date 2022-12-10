@@ -33,6 +33,7 @@ module.exports = {
     new CleanWebpackPlugin(),
   ],
   resolve: {
+    extensions: [".js", ".ts"],
     fallback: {
       path: false,
       os: false,

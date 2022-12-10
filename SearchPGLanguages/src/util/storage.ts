@@ -1,6 +1,8 @@
+import { JSONValue } from "src/types/json";
+
 export const storage = localStorage;
 
-export const getItem = (key, defaultValue = []) => {
+export const getItem = (key: string, defaultValue = []) => {
   try {
     const value = localStorage.getItem(key);
     return value ? JSON.parse(value) : defaultValue;
@@ -9,7 +11,7 @@ export const getItem = (key, defaultValue = []) => {
   }
 };
 
-export const setItem = (key, value) => {
+export const setItem = (key: string, value: JSONValue) => {
   try {
     localStorage.setItem(key, JSON.stringify(value));
   } catch (e) {
@@ -18,7 +20,7 @@ export const setItem = (key, value) => {
   }
 };
 
-export const removeItem = (key) => {
+export const removeItem = (key: string) => {
   try {
     localStorage.removeItem(key);
   } catch (e) {
