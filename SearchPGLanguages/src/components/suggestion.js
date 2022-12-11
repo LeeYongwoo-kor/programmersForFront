@@ -1,3 +1,5 @@
+import CONSTANTS from "../constants/constants";
+
 export default function Suggestion({ $target, initialState, onSelect }) {
   this.$element = document.createElement("div");
   this.$element.className = "Suggestion";
@@ -36,6 +38,7 @@ export default function Suggestion({ $target, initialState, onSelect }) {
       this.$element.innerHTML = `
             <ul>
                 ${items
+                  .slice(0, CONSTANTS.SUGGESTION.listLimit)
                   .map(
                     (item, idx) =>
                       `<li class="${
