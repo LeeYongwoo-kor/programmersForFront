@@ -1,8 +1,10 @@
-import { fetchedLanguagesByKeyword } from "./api/api.ts";
-import SearchInput from "./components/searchInput.js";
-import Suggestion from "./components/suggestion.js";
-import SelectedLanguages from "./components/selectedLanguages.js";
+import { fetchedLanguagesByKeyword } from "./api/api";
+import SearchInput from "./components/searchInput";
+import SelectedLanguages from "./components/selectedLanguages";
+import Suggestion from "./components/suggestion";
+import debounce from "./util/debounce";
 import { getItem } from "./util/storage";
+import CONSTANTS from "./constants/constants";
 
 export default function App({ $target }) {
   this.state = {
@@ -30,7 +32,7 @@ export default function App({ $target }) {
   new SearchInput({
     $target,
     initialState: "",
-    onChange: async (keyword) => {
+    onChange: debounce(async (keyword) => {
       // 입력한 검색어가 다 지워진 경우, fetchLanguages를 초기화
       if (keyword.length === 0) {
         this.setState({
@@ -49,7 +51,7 @@ export default function App({ $target }) {
           });
         }
       }
-    },
+    }, CONSTANTS.SEARCH_INPUT.debounceDelay),
   });
 
   const suggestion = new Suggestion({
