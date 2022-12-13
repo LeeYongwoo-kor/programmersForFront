@@ -43,8 +43,8 @@ export async function fetchedAllLanguages() {
   );
 }
 
-export async function fetchedLanguagesByKeyword(keyword: string) {
+export async function fetchedLanguagesByKeyword(keyword: string, limit?: string) {
   return api<ISearchPrgLanguagesRslt>(
-    `${LOCAL_API_END_POINT}?keyword=${keyword}`
+    `${LOCAL_API_END_POINT}?keyword=${keyword}&limit=${limit}`
   );
 }

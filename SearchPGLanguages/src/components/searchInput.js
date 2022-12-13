@@ -25,10 +25,10 @@ export default function SearchInput({ $target, initialState, onChange }) {
     if (!actionIgnoreKeys.includes(e.key)) {
       onChange(e.target.value);
     }
+  });
 
-    this.$element.addEventListener("submit", (e) => {
-      e.preventDefault();
-    });
+  this.$element.addEventListener("submit", (e) => {
+    e.preventDefault();
   });
 
   this.render();

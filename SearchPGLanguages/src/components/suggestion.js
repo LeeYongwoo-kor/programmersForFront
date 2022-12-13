@@ -1,14 +1,12 @@
-import CONSTANTS from "../constants/constants";
-
 export default function Suggestion({ $target, initialState, onSelect }) {
   this.$element = document.createElement("div");
   this.$element.className = "Suggestion";
   $target.appendChild(this.$element);
 
   this.state = {
-    cursor: 0,
     selectedIndex: 0,
     items: initialState.items,
+    keyword: "",
   };
 
   this.setState = (nextState) => {
@@ -20,10 +18,6 @@ export default function Suggestion({ $target, initialState, onSelect }) {
   };
 
   this.renderMatchedItem = (keyword, item) => {
-    if (!item.includes(keyword)) {
-      return item;
-    }
-
     const matchedText = item.match(new RegExp(keyword, "gi"))[0];
     return item.replace(
       new RegExp(matchedText, "gi"),
@@ -38,7 +32,6 @@ export default function Suggestion({ $target, initialState, onSelect }) {
       this.$element.innerHTML = `
             <ul>
                 ${items
-                  .slice(0, CONSTANTS.SUGGESTION.listLimit)
                   .map(
                     (item, idx) =>
                       `<li class="${

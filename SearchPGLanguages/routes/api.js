@@ -7,6 +7,39 @@ const asyncHandler = (func) => (req, res, next) => {
   Promise.resolve(func(req, res, next)).catch(next);
 };
 
+const sortApi = (data, keyword) => {
+  const keywordUpperCase = keyword.toUpperCase();
+
+  return [...data].sort((a, b) => {
+    const elementA = a.ProgrammingLanguage.toUpperCase();
+    const elementB = b.ProgrammingLanguage.toUpperCase();
+
+    const isStartKeywordA = elementA.startsWith(keywordUpperCase);
+    const isStartKeywordB = elementB.startsWith(keywordUpperCase);
+
+    if (!(isStartKeywordA && isStartKeywordB)) {
+      if (isStartKeywordA) {
+        return -1;
+      }
+      if (isStartKeywordB) {
+        return 1;
+      }
+    }
+    if (elementA < elementB) {
+      return -1;
+    }
+    if (elementB < elementA) {
+      return 1;
+    }
+
+    return 0;
+  });
+};
+
+const sliceApi = (data, limit) => {
+  return data.slice(0, limit);
+};
+
 router.use(
   asyncHandler(async function (req, res, next) {
     if (!cache[req.baseUrl]) {
@@ -24,6 +57,7 @@ router.use(
  */
 router.get("/", function (req, res, next) {
   const keyword = req.query.keyword;
+  const limit = req.query.limit;
   // console.log(Object.keys(cache));
 
   if (!keyword) {
@@ -59,8 +93,14 @@ router.get("/", function (req, res, next) {
     return;
   }
 
-  cache[req.originalUrl] = result;
-  res.status(200).json(result);
+  let sortedResult = sortApi(result, keyword);
+
+  if (limit) {
+    sortedResult = sliceApi(sortedResult, limit);
+  }
+
+  cache[req.originalUrl] = sortedResult;
+  res.status(200).json(sortedResult);
 });
 
 module.exports = router;
