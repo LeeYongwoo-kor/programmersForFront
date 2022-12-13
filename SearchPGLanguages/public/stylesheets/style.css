@@ -71,6 +71,9 @@ div.SelectedLanguage > ul > li:active {
 
 div.Suggestion {
   width: 400px;
+  max-height: 450px;
+  overflow-y: auto;
+  scrollbar-gutter: stable;
   font-size: 1.1rem;
   text-indent: 10px;
   margin-top: 15px;
@@ -78,6 +81,21 @@ div.Suggestion {
   border: 1px solid gray;
   border-radius: 20px;
   cursor: pointer;
+}
+
+div.Suggestion::-webkit-scrollbar {
+  height: 80%;
+  border-radius: 30px;
+  width: 15px;
+}
+div.Suggestion::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 191, 255, 0.8);
+  border-radius: 30px;
+}
+div.Suggestion::-webkit-scrollbar-track {
+  background-color: #e4e4e4;
+  border-radius: 30px;
+  margin: 8px 0;
 }
 
 div.Suggestion > ul > li {
@@ -90,5 +108,11 @@ div.Suggestion > ul > li:hover {
 
 li.Suggestion__item--selected {
   font-weight: 600;
+  color: white;
   background-color: deepskyblue;
+}
+
+li:not(li.Suggestion__item--selected) > span.Suggestion__item--matched {
+  font-weight: 600;
+  color: royalblue;
 }
