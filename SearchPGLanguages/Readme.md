@@ -60,9 +60,9 @@ If you want typescript ↓
 
 https://webpack.js.org/guides/typescript/
 
-- 10. npm i install -D webpack webpack-cli webpack-dev-server
-- 11. npm i install -D clean-webpack-plugin html-webpack-plugin ts-loader
-- 12. npm i install -D eslint (If you need this)
+- 10. npm i -D webpack webpack-cli webpack-dev-server
+- 11. npm i -D clean-webpack-plugin html-webpack-plugin ts-loader
+- 12. npm i -D eslint (If you need this)
 
 ---
 
@@ -130,7 +130,7 @@ module.exports = {
 };
 ```
 
-- 13. npm run build
+- 13. npm run build && npm run start (always)
 
 ---
 
@@ -140,3 +140,10 @@ module.exports = {
 <!-- index.html -->
 <script src="../dist/bundle.js" type="module"></script>
 ```
+
+---
+
+If you want to use fetch in server(nodejs) ↓
+
+- 14. npm install node-fetch
+- 15. npm install @types/node-fetch --save-dev
