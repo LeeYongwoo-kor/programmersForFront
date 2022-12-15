@@ -11,6 +11,7 @@ export default function App({ $target }) {
     fetchedLanguages: [],
     selectedLanguages: getItem("selectedLanguages"),
     keyword: "",
+    noResults: false,
   };
 
   this.setState = (nextState) => {
@@ -22,6 +23,7 @@ export default function App({ $target }) {
       selectedIndex: 0,
       items: this.state.fetchedLanguages,
       keyword: this.state.keyword,
+      noResults: this.state.noResults,
     });
     selectedLanguages.setState(this.state.selectedLanguages);
   };
@@ -42,7 +44,7 @@ export default function App({ $target }) {
     initialState: "",
     onChange: debounce(async (keyword) => {
       // 입력한 검색어가 다 지워진 경우, fetchLanguages를 초기화
-      if (keyword.length === 0) {
+      if (!keyword || keyword.length === 0 || !keyword.trim()) {
         this.setState({
           fetchedLanguages: [],
         });
@@ -51,15 +53,17 @@ export default function App({ $target }) {
           keyword,
           CONSTANTS.SUGGESTION.listLimit
         );
-        const { notFound } = languages;
-        if (notFound) {
+        const { noResults } = languages;
+        if (noResults) {
           this.setState({
             fetchedLanguages: [],
+            noResults: true,
           });
         } else {
           this.setState({
             fetchedLanguages: languages,
             keyword: keyword,
+            noResults: false,
           });
         }
       }
@@ -72,6 +76,7 @@ export default function App({ $target }) {
       selectedIndex: 0,
       items: [],
       keyword: "",
+      noResults: false,
     },
     onSelect: (language) => {
       // 이미 선택된 언어인 경우, 맨 뒤에 보내버리기

@@ -3,6 +3,10 @@
   box-sizing: border-box;
 }
 
+*:focus {
+  outline: 0;
+}
+
 body {
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
@@ -80,7 +84,6 @@ div.Suggestion {
   padding: 15px;
   border: 1px solid gray;
   border-radius: 20px;
-  cursor: pointer;
 }
 
 div.Suggestion::-webkit-scrollbar {
@@ -100,9 +103,10 @@ div.Suggestion::-webkit-scrollbar-track {
 
 div.Suggestion > ul > li {
   padding: 5px 0;
+  cursor: pointer;
 }
 
-div.Suggestion > ul > li:hover {
+div.Suggestion > ul > li:not(.Suggestion__no-results):hover {
   background-color: rgba(0, 191, 255, 0.5);
 }
 
@@ -112,7 +116,13 @@ li.Suggestion__item--selected {
   background-color: deepskyblue;
 }
 
-li:not(li.Suggestion__item--selected) > span.Suggestion__item--matched {
+li.Suggestion__no-results {
+  cursor: not-allowed !important;
+  font-weight: 600;
+  color: grey;
+}
+
+li:not(.Suggestion__item--selected) > span.Suggestion__item--matched {
   font-weight: 600;
   color: royalblue;
 }

@@ -1,12 +1,14 @@
 export default function Suggestion({ $target, initialState, onSelect }) {
   this.$element = document.createElement("div");
   this.$element.className = "Suggestion";
+  this.$element.tabIndex = -1;
   $target.appendChild(this.$element);
 
   this.state = {
     selectedIndex: 0,
     items: initialState.items,
     keyword: "",
+    noResults: false,
   };
 
   this.setState = (nextState) => {
@@ -26,7 +28,7 @@ export default function Suggestion({ $target, initialState, onSelect }) {
   };
 
   this.render = () => {
-    const { selectedIndex, keyword, items = [] } = this.state;
+    const { selectedIndex, keyword, items = [], noResults } = this.state;
     if (items.length > 0) {
       this.$element.style.display = "block";
       this.$element.innerHTML = `
@@ -47,20 +49,31 @@ export default function Suggestion({ $target, initialState, onSelect }) {
             </ul>
         `;
     } else {
-      this.$element.style.display = "none";
-      this.$element.innerHTML = "";
+      if (noResults) {
+        this.$element.style.display = "block";
+        this.$element.innerHTML = `
+              <ul>
+                <li class="Suggestion__no-results">No Results found.</li>
+              <ul>
+            `;
+      } else {
+        this.$element.style.display = "none";
+        this.$element.innerHTML = "";
+      }
     }
   };
 
   this.$element.addEventListener("click", (e) => {
-    const $li = e.target.closest("li");
-    if ($li) {
-      const { index } = $li.dataset;
-      try {
-        const { ProgrammingLanguage } = this.state.items[parseInt(index)];
-        onSelect(ProgrammingLanguage);
-      } catch (e) {
-        alert("Something wrong! Not processed normally");
+    if (this.state.items.length > 0) {
+      const $li = e.target.closest("li");
+      if ($li) {
+        const { index } = $li.dataset;
+        try {
+          const { ProgrammingLanguage } = this.state.items[parseInt(index)];
+          onSelect(ProgrammingLanguage);
+        } catch (e) {
+          alert("Something wrong! Not processed normally");
+        }
       }
     }
   });
@@ -74,10 +87,22 @@ export default function Suggestion({ $target, initialState, onSelect }) {
 
       if (navigationKeys.includes(e.key)) {
         if (e.key === "ArrowUp") {
-          nextIndex = selectedIndex === 0 ? lastIndex : nextIndex - 1;
+          if (selectedIndex === 0) {
+            nextIndex = lastIndex;
+            this.$element.scrollTo(0, this.$element.scrollHeight);
+          } else {
+            nextIndex = nextIndex - 1;
+          }
         } else if (e.key === "ArrowDown") {
-          nextIndex = selectedIndex === lastIndex ? 0 : nextIndex + 1;
+          if (selectedIndex === lastIndex) {
+            nextIndex = 0;
+            this.$element.scrollTo(0, 0);
+          } else {
+            nextIndex = nextIndex + 1;
+          }
         }
+
+        this.$element.focus();
 
         this.setState({
           ...this.state,
