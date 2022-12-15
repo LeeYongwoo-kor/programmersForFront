@@ -60,17 +60,6 @@ router.get("/", function (req, res, next) {
   const limit = req.query.limit;
   // console.log(Object.keys(cache));
 
-  if (!keyword) {
-    res
-      .status(404)
-      .json({
-        notFound: true,
-        message: `Not Found: ${res.statusCode}`,
-      })
-      .end();
-    return;
-  }
-
   if (cache[req.originalUrl]) {
     res.status(200).json(cache[req.originalUrl]);
     return;
@@ -84,10 +73,9 @@ router.get("/", function (req, res, next) {
 
   if (!result || result.length === 0) {
     res
-      .status(404)
       .json({
-        notFound: true,
-        message: `Not Found: ${res.statusCode}`,
+        noResults: true,
+        message: `No results found.`,
       })
       .end();
     return;

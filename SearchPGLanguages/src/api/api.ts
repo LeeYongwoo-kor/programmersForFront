@@ -13,7 +13,7 @@ async function api<T>(
 ): Promise<T> {
   return fetch(url, { headers: requestHeaders })
     .then(async (res) => {
-      if (!res.ok && res.status !== 404) {
+      if (!res.ok) {
         throw new Error("Request failed!");
       }
 
@@ -43,7 +43,10 @@ export async function fetchedAllLanguages() {
   );
 }
 
-export async function fetchedLanguagesByKeyword(keyword: string, limit?: string) {
+export async function fetchedLanguagesByKeyword(
+  keyword: string,
+  limit?: string
+) {
   return api<ISearchPrgLanguagesRslt>(
     `${LOCAL_API_END_POINT}?keyword=${keyword}&limit=${limit}`
   );
