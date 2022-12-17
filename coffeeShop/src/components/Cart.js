@@ -1,5 +1,5 @@
-import { routeChange } from "../router/router";
-import { removeItem } from "../util/storage";
+import { routeChange } from "../router/router.js";
+import { removeItem } from "../util/storage.js";
 
 export default function Cart({ $target, initialState }) {
   const $component = document.createElement("div");

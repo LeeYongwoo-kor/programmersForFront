@@ -1,4 +1,4 @@
-import SelectedOptions from "./SelectedOptions";
+import SelectedOptions from "./SelectedOptions.js";
 
 export default function ProductDetail({ $target, initialState }) {
   let isInitialized = false;

@@ -1,5 +1,5 @@
-import { request } from "../api/api";
-import ProductList from "../components/ProductList";
+import { request } from "../api/api.js";
+import ProductList from "../components/ProductList.js";
 
 export default function ProuctListPage({ $target }) {
   const $page = document.createElement("div");

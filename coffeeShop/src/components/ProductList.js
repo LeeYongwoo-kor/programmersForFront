@@ -1,4 +1,4 @@
-import { routeChange } from "../router/router";
+import { routeChange } from "../router/router.js";
 
 export default function ProductList({ $target, initialState }) {
   const productList = document.createElement("ul");

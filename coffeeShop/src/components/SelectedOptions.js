@@ -1,5 +1,5 @@
-import { routeChange } from "../router/router";
-import { getItem, setItem } from "../util/storage";
+import { routeChange } from "../router/router.js";
+import { getItem, setItem } from "../util/storage.js";
 
 export default function SelectedOptions({ $target, initialState }) {
   const $component = document.createElement("div");

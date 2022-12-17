@@ -1,10 +1,11 @@
-import CartPage from "./components/CartPage";
-import ProductDetailPage from "./components/ProductDetailPage";
-import { init } from "./router/router";
+import CartPage from "./pages/CartPage.js";
+import ProductDetailPage from "./pages/ProductDetailPage.js";
+import { init } from "./router/router.js";
 
 export default function App({ $target }) {
   this.route = () => {
     const { pathname } = location;
+    console.log(pathname);
 
     $target.innerHTML = "";
 
