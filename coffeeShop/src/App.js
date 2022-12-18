@@ -10,7 +10,7 @@ export default function App({ $target }) {
     $target.innerHTML = "";
 
     if (pathname === "/") {
-      new ProductListPage({ $target }).render();
+      new ProductDetailPage({ $target }).render();
     } else if (pathname.indexOf("/products/") === 0) {
       const [, , productId] = pathname.split("/");
       new ProductDetailPage({
