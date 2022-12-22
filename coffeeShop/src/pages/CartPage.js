@@ -40,7 +40,7 @@ export default function CartPage({ $target }) {
   this.fetchProducts = async () => {
     const products = await Promise.all(
       cartData.map(async (cartItem) => {
-        const product = await request(`/products/${cartItem.productsId}`);
+        const product = await request(`/products/${cartItem.productId}`);
         const selectedOption = product.productOptions.find(
           (option) => option.id === cartItem.optionId
         );

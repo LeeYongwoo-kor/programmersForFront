@@ -1,8 +1,9 @@
 import { request } from "../api/api.js";
+import ProductDetail from "../components/ProductDetail.js";
 
 export default function ProductDetailPage({ $target, productId }) {
   this.state = {
-    productId,
+    productId: productId,
     product: null,
   };
 
@@ -23,7 +24,7 @@ export default function ProductDetailPage({ $target, productId }) {
       $target.innerHTML = "";
       $target.appendChild($page);
 
-      new ProductDetailPage({
+      new ProductDetail({
         $target: $page,
         initialState: {
           product: this.state.product,
@@ -35,6 +36,11 @@ export default function ProductDetailPage({ $target, productId }) {
 
   this.fetchProduct = async () => {
     const { productId } = this.state;
+    if (!productId) {
+      alert("This Product has been deleted or does not exist.");
+      return;
+    }
+
     const product = await request(`/products/${productId}`);
     this.setState({
       ...this.state,

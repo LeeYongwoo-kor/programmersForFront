@@ -15,15 +15,17 @@ export default function ProuctListPage({ $target }) {
     this.state = nextState;
   };
 
-  const fetchProducts = async () => {
+  this.fetchProducts = async () => {
     const products = await request("/products");
     this.setState(products);
   };
 
-  const productList = new ProductList({
-    $target: $page,
-    initialState: this.state,
-  });
-
-  fetchProducts();
+  this.fetchProducts()
+    .then(() => {
+      new ProductList({
+        $target: $page,
+        initialState: this.state,
+      });
+    })
+    .catch(() => alert("Failed to load list!"));
 }

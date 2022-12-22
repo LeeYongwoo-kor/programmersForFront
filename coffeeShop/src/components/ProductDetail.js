@@ -1,12 +1,12 @@
 import SelectedOptions from "./SelectedOptions.js";
 
 export default function ProductDetail({ $target, initialState }) {
-  let isInitialized = false;
+  let isInitialized = true;
 
-  const productDetail = document.createElement("div");
-  productDetail.className = "ProductDetail";
+  const $productDetail = document.createElement("div");
+  $productDetail.className = "ProductDetail";
 
-  $target.appendChild(productDetail);
+  $target.appendChild($productDetail);
 
   this.state = initialState;
 
@@ -18,6 +18,7 @@ export default function ProductDetail({ $target, initialState }) {
 
     if (selectedOptions) {
       selectedOptions.setState({
+        ...this.state,
         selectedOptions: this.state.selectedOptions,
       });
     }
@@ -26,17 +27,18 @@ export default function ProductDetail({ $target, initialState }) {
   this.render = () => {
     const { product } = this.state;
 
-    if (!isInitialized) {
-      productDetail.innerHTML = `
+    if (isInitialized) {
+      $productDetail.innerHTML = `
       <img src="${product.imageUrl}"} />
       <div class="ProductDetail__info">
         <h2>${product.name}</h2>
         <div class="ProductDetail__price">$ ${product.price}~</div>
         <select>
           <option>Please select a product</option>
-          ${product.productOptions
+          ${product?.productOptions
             .map((option) => {
-              `<option value=${option.id}" ${
+              return `
+              <option value="${option.id}" ${
                 option.stock === 0 ? "disabled" : ""
               }>
               ${option.stock === 0 ? "(Out of stock)" : ""}${product.name} ${
@@ -52,20 +54,22 @@ export default function ProductDetail({ $target, initialState }) {
     `;
 
       selectedOptions = new SelectedOptions({
-        $target: productDetail.querySelector(".ProductDetail__selectedOptions"),
+        $target: $productDetail.querySelector(
+          ".ProductDetail__selectedOptions"
+        ),
         initialState: {
           product: this.state.product,
           selectedOptions: this.state.selectedOptions,
         },
       });
 
-      isInitialized = true;
+      isInitialized = false;
     }
   };
 
   this.render();
 
-  productDetail.addEventListener("change", (e) => {
+  $productDetail.addEventListener("change", (e) => {
     if (e.target.tagName === "SELECT") {
       const selectedOptionId = parseInt(e.target.value);
       const { product, selectedOptions } = this.state;

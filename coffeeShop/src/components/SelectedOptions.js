@@ -34,7 +34,7 @@ export default function SelectedOptions({ $target, initialState }) {
               ${selectedOption.optionName} $ ${
                 product.price + selectedOption.optionPrice
               }
-              <input type="text" data-optionId="${
+              <input type="text" data-option-id="${
                 selectedOption.optionId
               }" value="${selectedOption.quantity}" />
             </li>
@@ -50,10 +50,10 @@ export default function SelectedOptions({ $target, initialState }) {
 
   this.render();
 
-  $component.addEventListener("change", (e) => {
+  $component.addEventListener("input", (e) => {
     if (e.target.tagName === "INPUT") {
       try {
-        const nextQuantity = parseInt(e.target.value);
+        const nextQuantity = parseInt(e.target.value || 0);
         const nextSelectedOptions = [...this.state.selectedOptions];
 
         if (typeof nextQuantity === "number") {
@@ -67,13 +67,22 @@ export default function SelectedOptions({ $target, initialState }) {
             (selectedOption) => selectedOption.optionId === optionId
           );
 
-          nextSelectedOptions[selectedOptionIndex].quantity =
+          const quantity =
             option.stock >= nextQuantity ? nextQuantity : option.stock;
+          nextSelectedOptions[selectedOptionIndex].quantity = quantity;
 
           this.setState({
             ...this.state,
             selectedOptions: nextSelectedOptions,
           });
+
+          const $newInput =
+            $component.querySelectorAll("input")[selectedOptionIndex];
+          $newInput.setSelectionRange(
+            String(quantity).length,
+            String(quantity).length
+          );
+          $newInput.focus();
         }
       } catch (e) {
         console.error(e);

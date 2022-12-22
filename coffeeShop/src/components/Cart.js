@@ -41,7 +41,7 @@ export default function Cart({ $target, initialState }) {
               .join("")}
         </ul>
         <div class="Cart__totalPrice">
-            Total $ ${this.getTotalPrice}
+            Total $ ${this.getTotalPrice()}
         </div>
         <button class="OrderButton">Order</button>
     `;
