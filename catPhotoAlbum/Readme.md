@@ -12,7 +12,7 @@
 If you want typescript ↓
 
 - 7. npm install typescript
-- 8. npm npm install ts-node @types/node @types/express --save-dev
+- 8. npm install ts-node @types/node @types/express --save-dev
 - 9. npx tsc --init
 
 > Add option in tsconfig.json :
